@@ -9,7 +9,7 @@ RabbitMQ runs on many operating systems and cloud environments, and provides a w
 In my current workplace we use a 3 nodes cluster running on 3 separate Linux VM machines. We do have a dev environment but sometimes there is a need to span something quick and dirty.  This step-by-step guide will walk you through installing RabbitMQ cluster using Docker Compose and Docker Desktop.
 
 
-In a nutshel, this is what we are going to create. Load balancing is optional and to be honest not recommended option for production RabbitMQ cluster. 
+In a nutshel, this is what we are going to create. Load balancing is an optional but convenient in this particular setup.
 
 ![image](https://github.com/dsamborschi/Rabbit-Cluster/assets/3628896/444069b3-a48d-4604-99a9-f542ffc00ff8)
 
@@ -105,8 +105,8 @@ networks:
 
 - version: '3.8': This specifies the version of the Docker Compose file format that we are using.
 - services: This section defines the RabbitMQ service that we want to deploy. In this case, we are using the official RabbitMQ Docker image with the management plugin enabled.
-- container_name: rabbitmq: This assigns a name to the RabbitMQ container.
-- environment: This section sets environment variables for the RabbitMQ container. In this example, we are setting the default username and password to "guest". Note that this is not recommended for production environments.
+- container_name: This assigns a name to the RabbitMQ container. in case of the cluster configuration we have rabbitmq1, rabbitmq2 and rabbitmq3.
+- environment: This section sets environment variables for the RabbitMQ container. In this example, we are setting the JOIN_CLUSTER_HOST, RABBITMQ_ERLANG_COOKIE and RABBITMQ_CONFIG_FILE variables to form a cluster and set the custom configuration. 
 - ports: This section maps the ports used by RabbitMQ to the corresponding ports on the host machine. In this case, we are mapping the port 5672 for AMQP communication and the port 15672 for the RabbitMQ management interface. For simplicity, HAproxy was used to balance the incoming traffic.
 - networks: This section specifies the network settings for the RabbitMQ container. In this example, we are using the rabbitmq-cluster-network Docker bridge network.
 
@@ -135,7 +135,7 @@ vm_memory_high_watermark.relative = 0.8
 
 ## Step 5: Writing the RabitMQ custom definitions (optional):
 
-You can save some time to tell RabbbitMQ nodes how you want your users, policies and queues to be configured. To do so we can use the custom definitions file below. It is an optional step, but very helfull if you want to quickly set up/clone a new testing environment. This file was created by RabbitMQ when we first created our production environment. 
+You can save some time to tell RabbbitMQ nodes how you want your users, policies and queues to be configured. To do so we can use the custom definitions file below. It is an optional step, but very helfull if you want to quickly set up/clone a new testing environment. Intially this file was created from the existing  on-prem RabbitMQ enviroment.
 
 ```yaml
 {
@@ -191,7 +191,7 @@ You can save some time to tell RabbbitMQ nodes how you want your users, policies
     ],
     "exchanges": [
         {
-            "name": "Aptify",
+            "name": "Exchange 1",
             "vhost": "/",
             "type": "direct",
             "durable": true,
@@ -202,7 +202,7 @@ You can save some time to tell RabbbitMQ nodes how you want your users, policies
     ],
     "bindings": [
         {
-            "source": "Exchage 1",
+            "source": "Exchange 1",
             "vhost": "/",
             "destination": "Queue 1",
             "destination_type": "queue",
@@ -210,7 +210,7 @@ You can save some time to tell RabbbitMQ nodes how you want your users, policies
             "arguments": {}
         },
         {
-            "source": "Exchage 1",
+            "source": "Exchange 1",
             "vhost": "/",
             "destination": "Queue 2",
             "destination_type": "queue",
@@ -222,6 +222,8 @@ You can save some time to tell RabbbitMQ nodes how you want your users, policies
 ```
 
 ## Step 6: Writing the RabitMQ cluster entrypoint bash script:
+
+In this step we define the entry point instructions for a node. Env variable $JOIN_CLUSTER_HOST with the rabbitmq cli commands is used to join a node to the cluster.
 
 ```yaml
 #!/bin/bash
