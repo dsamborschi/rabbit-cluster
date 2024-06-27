@@ -105,12 +105,12 @@ networks:
 
 ## In this configuration:
 
-version: '3.8': This specifies the version of the Docker Compose file format that we are using.
-services: This section defines the RabbitMQ service that we want to deploy. In this case, we are using the official RabbitMQ Docker image with the management plugin enabled.
-container_name: rabbitmq: This assigns a name to the RabbitMQ container.
-environment: This section sets environment variables for the RabbitMQ container. In this example, we are setting the default username and password to "guest". Note that this is not recommended for production environments.
-ports: This section maps the ports used by RabbitMQ to the corresponding ports on the host machine. In this case, we are mapping the port 5672 for AMQP communication and the port 15672 for the RabbitMQ management interface.
-networks: This section specifies the network settings for the RabbitMQ container. In this example, we are using the rabbitmq-cluster-network Docker bridge network.
+- version: '3.8': This specifies the version of the Docker Compose file format that we are using.
+- services: This section defines the RabbitMQ service that we want to deploy. In this case, we are using the official RabbitMQ Docker image with the management plugin enabled.
+- container_name: rabbitmq: This assigns a name to the RabbitMQ container.
+- environment: This section sets environment variables for the RabbitMQ container. In this example, we are setting the default username and password to "guest". Note that this is not recommended for production environments.
+- ports: This section maps the ports used by RabbitMQ to the corresponding ports on the host machine. In this case, we are mapping the port 5672 for AMQP communication and the port 15672 for the RabbitMQ management interface.
+- networks: This section specifies the network settings for the RabbitMQ container. In this example, we are using the rabbitmq-cluster-network Docker bridge network.
 
 ## Step 3: Writing the RabitMQ Docker file:
 
