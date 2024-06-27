@@ -112,6 +112,8 @@ networks:
 
 ## Step 3: Writing the RabitMQ Docker file:
 
+in th step , we build a rabbitmq image from the alpine 
+
 ```yaml
 FROM rabbitmq:3-management-alpine
 COPY rabbitmq-custom.conf /etc/rabbitmq/rabbitmq-custom.conf
