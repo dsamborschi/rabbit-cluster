@@ -105,15 +105,14 @@ networks:
 
 ## In this configuration:
 
-version: '3': This specifies the version of the Docker Compose file format that we are using.
+version: '3.8': This specifies the version of the Docker Compose file format that we are using.
 services: This section defines the RabbitMQ service that we want to deploy. In this case, we are using the official RabbitMQ Docker image with the management plugin enabled.
-image: rabbitmq:management: This specifies the RabbitMQ Docker image we want to use.
 container_name: rabbitmq: This assigns a name to the RabbitMQ container.
 environment: This section sets environment variables for the RabbitMQ container. In this example, we are setting the default username and password to "guest". Note that this is not recommended for production environments.
 ports: This section maps the ports used by RabbitMQ to the corresponding ports on the host machine. In this case, we are mapping the port 5672 for AMQP communication and the port 15672 for the RabbitMQ management interface.
-networks: This section specifies the network settings for the RabbitMQ container. In this example, we are using the default Docker bridge network.
+networks: This section specifies the network settings for the RabbitMQ container. In this example, we are using the rabbitmq-cluster-network Docker bridge network.
 
 ## Step 4: Verifying Installation:
 
-Once the containers are up and running, you can verify the installation by accessing the RabbitMQ Management UI in your web browser. Navigate to http://localhost:15672 view the Management dashboard. From here, you can monitor RabbitMQ connections, channels, exchanges, queues, and streams in real time.
+Once the containers are up and running, you can verify the installation by accessing the RabbitMQ Management UI in your web browser. Navigate to http://localhost:15672 view the Management dashboard. From here, you can monitor RabbitMQ cluster, connections, channels, exchanges, queues, and streams in real time.
 
