@@ -26,7 +26,7 @@ https://docs.docker.com/compose/
 
 ## Step 2: Writing the Docker Compose File:
 
-We’ll start by creating a docker-compose.yml file to define our RabbitMQ setup. Below is a sample configuration that includes a 3 node RabbitMQ cluster and Haproxy load balancer:
+We’ll start by creating a docker-compose.yml file to define our RabbitMQ setup. Below is a sample configuration that includes a 3 node RabbitMQ cluster and HAproxy load balancer:
 
 ```yaml
 version: "3.8"
