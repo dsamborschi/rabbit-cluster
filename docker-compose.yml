@@ -20,11 +20,8 @@ services:
         networks: 
             - rabbitmq-cluster-network
     rabbitmq2:
-
         build: rabbitmq/.
         container_name: rabbitmq2
-        ports:
-            - 15674:15672
         environment:
             - JOIN_CLUSTER_HOST=rabbitmq1
             - RABBITMQ_ERLANG_COOKIE='12345'
