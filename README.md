@@ -282,4 +282,8 @@ Once the containers are up and running, you can verify the installation by acces
 
 ![image](https://github.com/dsamborschi/rabbit-cluster/assets/3628896/09143255-9af5-4991-8b8a-89bc2b5968b4)
 
+## References
+
+https://www.rabbitmq.com/docs/clustering#:~:text=RabbitMQ%20nodes%20and%20CLI%20tools%20(e.g.%20rabbitmqctl%20)%20use%20a%20cookie,to%20255%20characters%20in%20size.
+
 
