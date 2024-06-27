@@ -48,7 +48,6 @@ services:
         networks: 
             - rabbitmq-cluster-network
     rabbitmq2:
-
         build: rabbitmq/.
         container_name: rabbitmq2
         ports:
@@ -70,7 +69,6 @@ services:
     rabbitmq3:
         build: rabbitmq/.
         container_name: rabbitmq3
-
         depends_on:
           - rabbitmq1
           - rabbitmq2
