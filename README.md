@@ -1,1 +1,1 @@
-How to set up a simple dockerized RabbitMQ cluster?
+How to set up a simple dockerized RabbitMQ cluster
