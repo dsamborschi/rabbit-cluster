@@ -261,7 +261,7 @@ tail -f /dev/null
 
 RabbitMQ nodes and CLI tools (e.g. rabbitmqctl ) use a cookie to determine whether they are allowed to communicate with each other. For two nodes to be able to communicate they must have the same shared secret called the Erlang cookie. The cookie is just a string of alphanumeric characters up to 255 characters in size.
 
-## Step 8: Deploy containers:
+## Step 8: Deploying containers:
 
 Run the docker compose comman to span the containers.
 
@@ -269,14 +269,14 @@ Run the docker compose comman to span the containers.
 docker-compose up -d
 ```
 
-## Step 9: Verify Docker containers:
+## Step 9: Verifying Docker containers:
 
 If you launch the Docker Desktop you should be able to see the containers up and running. Please refer for the console output if you see some containers don't start.
 
 ![image](https://github.com/dsamborschi/rabbit-cluster/assets/3628896/0e409440-1b04-46a6-931f-c9a332ccae4d)
 
 
-## Step 10: Verify installation:
+## Step 10: Verifying installation:
 
 Once the containers are up and running, you can verify the installation by accessing the RabbitMQ Management UI in your web browser. Navigate to http://localhost:15672 view the Management dashboard. From here, you can monitor RabbitMQ cluster, connections, channels, exchanges, queues, and streams in real time.
 
