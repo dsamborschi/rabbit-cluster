@@ -107,7 +107,7 @@ networks:
 - services: This section defines the RabbitMQ service that we want to deploy. In this case, we are using the official RabbitMQ Docker image with the management plugin enabled.
 - container_name: rabbitmq: This assigns a name to the RabbitMQ container.
 - environment: This section sets environment variables for the RabbitMQ container. In this example, we are setting the default username and password to "guest". Note that this is not recommended for production environments.
-- ports: This section maps the ports used by RabbitMQ to the corresponding ports on the host machine. In this case, we are mapping the port 5672 for AMQP communication and the port 15672 for the RabbitMQ management interface.
+- ports: This section maps the ports used by RabbitMQ to the corresponding ports on the host machine. In this case, we are mapping the port 5672 for AMQP communication and the port 15672 for the RabbitMQ management interface. For simplicity, HAproxy was used to balance the incoming traffic.
 - networks: This section specifies the network settings for the RabbitMQ container. In this example, we are using the rabbitmq-cluster-network Docker bridge network.
 
 ## Step 3: Writing the RabitMQ Docker file:
@@ -135,6 +135,7 @@ vm_memory_high_watermark.relative = 0.8
 
 ## Step 5: Writing the RabitMQ custom definitions (optional):
 
+You can save some time to tell RabbbitMQ nodes how you want your users and nodes to be configured. To do so we can use the custom definitions file below. It is an optional step, but very helfull if you want to quickly set up/clone a new testing environment. 
 
 ## Step 6: Writing the RabitMQ cluster entrypoint bash script:
 
