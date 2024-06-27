@@ -202,7 +202,7 @@ You can save some time to tell RabbbitMQ nodes how you want your users, policies
     ],
     "bindings": [
         {
-            "source": "Aptify",
+            "source": "Exchage 1",
             "vhost": "/",
             "destination": "Queue 1",
             "destination_type": "queue",
@@ -210,7 +210,7 @@ You can save some time to tell RabbbitMQ nodes how you want your users, policies
             "arguments": {}
         },
         {
-            "source": "Aptify",
+            "source": "Exchage 1",
             "vhost": "/",
             "destination": "Queue 2",
             "destination_type": "queue",
