@@ -135,7 +135,91 @@ vm_memory_high_watermark.relative = 0.8
 
 ## Step 5: Writing the RabitMQ custom definitions (optional):
 
-You can save some time to tell RabbbitMQ nodes how you want your users and nodes to be configured. To do so we can use the custom definitions file below. It is an optional step, but very helfull if you want to quickly set up/clone a new testing environment. 
+You can save some time to tell RabbbitMQ nodes how you want your users, policies and queues to be configured. To do so we can use the custom definitions file below. It is an optional step, but very helfull if you want to quickly set up/clone a new testing environment. This file was created by RabbitMQ when we first created our production environment. 
+
+```yaml
+{
+    "rabbit_version": "3.12.12",
+    "rabbitmq_version": "3.12.12",
+    "product_name": "RabbitMQ",
+    "product_version": "3.12.12",
+    "vhosts": [
+        {
+            "name": "/"
+        }
+    ],
+    
+    "topic_permissions": [],
+    "parameters": [],
+    "global_parameters": [
+        {
+            "name": "internal_cluster_id",
+            "value": "rabbitmq-cluster-id-nnNFX6CjbdyO1wKD2ZQxkQ"
+        }
+    ],
+    "policies": [
+        {
+            "vhost": "/",
+            "name": "ha-all",
+            "pattern": ".*",
+            "apply-to": "quorum_queues",
+            "definition": {
+                "ha-mode": "all"
+            },
+            "priority": 0
+        }
+    ],
+    "queues": [
+        {
+            "name": "Queue 1",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "quorum"
+            }
+        },
+        {
+            "name": "Queue 2",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "quorum"
+            }
+        }
+    ],
+    "exchanges": [
+        {
+            "name": "Aptify",
+            "vhost": "/",
+            "type": "direct",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        }
+    ],
+    "bindings": [
+        {
+            "source": "Aptify",
+            "vhost": "/",
+            "destination": "Queue 1",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        },
+        {
+            "source": "Aptify",
+            "vhost": "/",
+            "destination": "Queue 2",
+            "destination_type": "queue",
+            "routing_key": "",
+            "arguments": {}
+        }
+    ]
+}
+```
 
 ## Step 6: Writing the RabitMQ cluster entrypoint bash script:
 
