@@ -226,7 +226,7 @@ You can save some time to tell RabbbitMQ nodes how you want your users, policies
 
 ## Step 6: Writing the RabitMQ cluster entrypoint bash script:
 
-In this step we define the entry point instructions for a node. Env variable **$JOIN_CLUSTER_HOST** with the rabbitmq cli commands is used to join a node to the cluster.
+In this step we define the entry point instructions. Env variable **$JOIN_CLUSTER_HOST** with the rabbitmq cli commands combination is used to add a node to the cluster.
 
 ```yaml
 #!/bin/bash
