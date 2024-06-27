@@ -112,7 +112,32 @@ environment: This section sets environment variables for the RabbitMQ container.
 ports: This section maps the ports used by RabbitMQ to the corresponding ports on the host machine. In this case, we are mapping the port 5672 for AMQP communication and the port 15672 for the RabbitMQ management interface.
 networks: This section specifies the network settings for the RabbitMQ container. In this example, we are using the rabbitmq-cluster-network Docker bridge network.
 
-## Step 4: Verifying Installation:
+## Step 3: Writing the RabitMQ Docker file:
+
+```yaml
+FROM rabbitmq:3-management-alpine
+COPY rabbitmq-custom.conf /etc/rabbitmq/rabbitmq-custom.conf
+COPY definitions-custom.json /etc/rabbitmq/definitions-custom.json
+```
+
+## Step 4: Writing the RabitMQ custom configuration:
+
+```yaml
+# default settings
+loopback_users.guest = true
+listeners.tcp.default = 5672
+hipe_compile = false
+management.listener.port = 15672
+management.listener.ssl = false
+
+# Load the queues we initially want
+management.load_definitions = /etc/rabbitmq/definitions-custom.json
+vm_memory_high_watermark.relative = 0.8
+```
+
+## Step 5: Writing the RabitMQ custom definitions:
+
+## Step 6: Verifying Installation:
 
 Once the containers are up and running, you can verify the installation by accessing the RabbitMQ Management UI in your web browser. Navigate to http://localhost:15672 view the Management dashboard. From here, you can monitor RabbitMQ cluster, connections, channels, exchanges, queues, and streams in real time.
 
