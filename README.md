@@ -50,8 +50,6 @@ services:
     rabbitmq2:
         build: rabbitmq/.
         container_name: rabbitmq2
-        ports:
-            - 15674:15672
         environment:
             - JOIN_CLUSTER_HOST=rabbitmq1
             - RABBITMQ_ERLANG_COOKIE='12345'
@@ -168,9 +166,15 @@ fi
 # Keep foreground process active ...
 tail -f /dev/null
 ```
+## Step 7: Verify Docker Desktop containers:
+
+![image](https://github.com/dsamborschi/rabbit-cluster/assets/3628896/0e409440-1b04-46a6-931f-c9a332ccae4d)
 
 
-## Step 7: Verify installation:
+## Step 8: Verify installation:
 
 Once the containers are up and running, you can verify the installation by accessing the RabbitMQ Management UI in your web browser. Navigate to http://localhost:15672 view the Management dashboard. From here, you can monitor RabbitMQ cluster, connections, channels, exchanges, queues, and streams in real time.
+
+![image](https://github.com/dsamborschi/rabbit-cluster/assets/3628896/09143255-9af5-4991-8b8a-89bc2b5968b4)
+
 
