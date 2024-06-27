@@ -135,9 +135,42 @@ management.load_definitions = /etc/rabbitmq/definitions-custom.json
 vm_memory_high_watermark.relative = 0.8
 ```
 
-## Step 5: Writing the RabitMQ custom definitions:
+## Step 5: Writing the RabitMQ custom definitions (optional):
 
-## Step 6: Verifying Installation:
+
+## Step 6: Writing the RabitMQ cluster entrypoint bash script:
+
+```yaml
+#!/bin/bash
+
+set -e
+
+# Change .erlang.cookie permission
+chmod 400 /var/lib/rabbitmq/.erlang.cookie
+
+# Get hostname from enviromant variable
+HOSTNAME=`env hostname`
+echo "Starting RabbitMQ Server For host: " $HOSTNAME
+
+if [ -z "$JOIN_CLUSTER_HOST" ]; then
+    /usr/local/bin/docker-entrypoint.sh rabbitmq-server &
+    sleep 5
+    rabbitmqctl wait /var/lib/rabbitmq/mnesia/rabbit\@$HOSTNAME.pid
+else
+    /usr/local/bin/docker-entrypoint.sh rabbitmq-server -detached
+    sleep 5
+    rabbitmqctl wait /var/lib/rabbitmq/mnesia/rabbit\@$HOSTNAME.pid
+    rabbitmqctl stop_app
+    rabbitmqctl join_cluster rabbit@$JOIN_CLUSTER_HOST
+    rabbitmqctl start_app
+fi
+
+# Keep foreground process active ...
+tail -f /dev/null
+```
+
+
+## Step 7: Verify installation:
 
 Once the containers are up and running, you can verify the installation by accessing the RabbitMQ Management UI in your web browser. Navigate to http://localhost:15672 view the Management dashboard. From here, you can monitor RabbitMQ cluster, connections, channels, exchanges, queues, and streams in real time.
 
